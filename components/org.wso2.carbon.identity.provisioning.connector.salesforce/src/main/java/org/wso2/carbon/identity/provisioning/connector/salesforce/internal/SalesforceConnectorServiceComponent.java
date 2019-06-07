@@ -15,7 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 package org.wso2.carbon.identity.provisioning.connector.salesforce.internal;
 
 import org.apache.commons.logging.Log;
@@ -23,28 +22,28 @@ import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.identity.provisioning.AbstractProvisioningConnectorFactory;
 import org.wso2.carbon.identity.provisioning.connector.salesforce.SalesforceProvisioningConnectorFactory;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
-/**
- * @scr.component name=
- * "org.wso2.carbon.identity.provisioning.salesforce.internal.SalesforceConnectorServiceComponent"
- * immediate="true"
- */
+@Component(
+         name = "org.wso2.carbon.identity.provisioning.salesforce.internal.SalesforceConnectorServiceComponent", 
+         immediate = true)
 public class SalesforceConnectorServiceComponent {
 
     private static Log log = LogFactory.getLog(SalesforceConnectorServiceComponent.class);
 
+    @Activate
     protected void activate(ComponentContext context) {
-
         if (log.isDebugEnabled()) {
             log.debug("Activating SalesforceConnectorServiceComponent");
         }
-
         try {
             SalesforceProvisioningConnectorFactory salesforceProvisioningConnectorFactory = new SalesforceProvisioningConnectorFactory();
-
-            context.getBundleContext().registerService(
-                    AbstractProvisioningConnectorFactory.class.getName(),
-                    salesforceProvisioningConnectorFactory, null);
+            context.getBundleContext().registerService(AbstractProvisioningConnectorFactory.class.getName(), salesforceProvisioningConnectorFactory, null);
             if (log.isDebugEnabled()) {
                 log.debug("Salesforce Identity Provisioning Connector bundle is activated");
             }
@@ -53,3 +52,4 @@ public class SalesforceConnectorServiceComponent {
         }
     }
 }
+
